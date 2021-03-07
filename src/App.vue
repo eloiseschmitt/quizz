@@ -1,18 +1,25 @@
 <template>
   <HeaderApp :logo-link="state.logo.url" :logo-width="state.logo.width"/>
-  <OptionsSelect />
+  <OptionsSelect @category-chosen="apiCall"/>
+  <Question />
 </template>
 
 <script>
 import { reactive } from 'vue';
 import HeaderApp from './components/Header'
 import OptionsSelect from './components/OptionsSelect'
+import Question from './components/Question'
+
+const apiUrl = "https://www.openquizzdb.org/api.php"
+const apiKey = "CW369ZE3QZ"
+//?key=4DH83PMR5B&categ=musique&diff=3
 
 export default {
   name: 'App',
   components: {
     HeaderApp,
-    OptionsSelect
+    OptionsSelect,
+    Question
   },
   setup() {
     const state = reactive({
@@ -20,10 +27,17 @@ export default {
         url: "logo_large.png",
         width: 80
       }
-    })
+    });
+
+    function apiCall(category) {
+      fetch(apiUrl + '?key=' + apiKey + '&categ=' +  category + '&diff=1')
+        .then(blob => blob.json())
+        .then(response => console.log(response))
+    }
     
     return {
-      state
+      state,
+      apiCall
     }
   },
 
