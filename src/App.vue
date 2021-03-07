@@ -1,15 +1,18 @@
 <template>
   <HeaderApp :logo-link="state.logo.url" :logo-width="state.logo.width"/>
+  <OptionsSelect />
 </template>
 
 <script>
 import { reactive } from 'vue';
 import HeaderApp from './components/Header'
+import OptionsSelect from './components/OptionsSelect'
 
 export default {
   name: 'App',
   components: {
-    HeaderApp
+    HeaderApp,
+    OptionsSelect
   },
   setup() {
     const state = reactive({
@@ -17,7 +20,6 @@ export default {
         url: "logo_large.png",
         width: 80
       }
-      
     })
     
     return {

@@ -29,7 +29,6 @@ export default {
 
 <style scoped lang="scss">
 header {
-  min-height: 100vh;
   position: relative;
   .container {
     max-width: 1368px;
