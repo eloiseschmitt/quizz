@@ -1,16 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <HeaderApp :logo-link="state.logo.url" :logo-width="state.logo.width"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { reactive } from 'vue';
+import HeaderApp from './components/Header'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    HeaderApp
+  },
+  setup() {
+    const state = reactive({
+      logo: {
+        url: "logo_large.png",
+        width: 80
+      }
+      
+    })
+    
+    return {
+      state
+    }
+  },
+
 }
 </script>
 
