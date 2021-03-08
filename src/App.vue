@@ -1,7 +1,7 @@
 <template>
   <HeaderApp :logo-link="state.logo.url" :logo-width="state.logo.width"/>
   <OptionsSelect @category-chosen="apiCall"/>
-  <Question />
+  <Question :question-details="state.question"/>
 </template>
 
 <script>
@@ -26,13 +26,15 @@ export default {
       logo: {
         url: "logo_large.png",
         width: 80
-      }
+      },
+      question: ''
     });
 
     function apiCall(category) {
       fetch(apiUrl + '?key=' + apiKey + '&categ=' +  category + '&diff=1')
         .then(blob => blob.json())
-        .then(response => console.log(response))
+        .then(response => state.question = response.results[0])
+        .catch(error => console.log(error))
     }
     
     return {
