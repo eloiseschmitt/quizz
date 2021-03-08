@@ -27,7 +27,7 @@ export default {
         url: "logo_large.png",
         width: 80
       },
-      question: ''
+      question: {}
     });
 
     function apiCall(category) {

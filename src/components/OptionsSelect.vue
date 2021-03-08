@@ -1,6 +1,6 @@
 <template>
   <div class="custom-select">
-    <select name="" id="" v-model="categorySelected" @change="choseCat">
+    <select name="" id="" v-model="state.categorySelected" @change="choseCat">
       <option
         :value="category"
         v-for="(category, i) in state.options.categories"
@@ -29,7 +29,7 @@ export default {
   setup(props, context) {
     const state = reactive({
       options: options,
-      categorySelected: options.categories[0],
+      categorySelected: "",
     });
 
     function choseCat(cat) {
