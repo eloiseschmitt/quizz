@@ -20,9 +20,6 @@ export default {
     OptionsSelect,
     Question
   },
-  created() {
-    this.callApi();
-  },
   setup() {
     const state = reactive({
       logo: {
@@ -31,8 +28,8 @@ export default {
       },
       question: {},
       apiCall: {
-        category: "animaux",
-        level: "1"
+        category: "",
+        level: ""
       }
     });
 
@@ -47,7 +44,8 @@ export default {
     }
 
     function callApi() {
-      fetch(apiUrl + '?key=' + apiKey + '&categ=' +  state.apiCall.category + '&diff=' + state.apiCall.level)
+      if (state.apiCall.category && state.apiCall.level) {
+        fetch(apiUrl + '?key=' + apiKey + '&categ=' +  state.apiCall.category + '&diff=' + state.apiCall.level)
         .then(blob => blob.json())
         .then(response => {
           if (response.response_code === 0) {
@@ -55,6 +53,7 @@ export default {
           }
         })
         .catch(error => console.log(error))
+      }
     }
     
     return {
