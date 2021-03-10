@@ -1,6 +1,7 @@
 <template>
   <div class="custom-select">
-    <select name="" id="" v-model="state.categorySelected" @change="choseCat">
+    <select v-model="state.categorySelected" @change="choseCat">
+      <option disabled value="">Choose a category</option>
       <option
         :value="category"
         v-for="(category, i) in state.options.categories"
@@ -11,7 +12,8 @@
     </select>
   </div>
   <div class="custom-select">
-    <select name="" id="">
+    <select v-model="state.levelSeleted" @change="choseLevel">
+      <option disabled value="">Choose a level</option>
       <option value="0">Easy</option>
       <option value="1">Medium</option>
       <option value="2">Hard</option>
@@ -30,6 +32,7 @@ export default {
     const state = reactive({
       options: options,
       categorySelected: "",
+      levelSeleted:""
     });
 
     function choseCat(cat) {
@@ -37,9 +40,15 @@ export default {
       context.emit("category-chosen", value);
     }
 
+    function choseLevel(level) {
+        let value = level.target.value;
+        context.emit("level-chosen", value);
+    }
+
     return {
       state,
       choseCat,
+      choseLevel
     };
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <HeaderApp :logo-link="state.logo.url" :logo-width="state.logo.width"/>
-  <OptionsSelect @category-chosen="apiCall"/>
+  <OptionsSelect @category-chosen="setCategoryChosen" @level-chosen="setLevelChosen"/>
   <Question :question-details="state.question"/>
 </template>
 
@@ -12,7 +12,6 @@ import Question from './components/Question'
 
 const apiUrl = "https://www.openquizzdb.org/api.php"
 const apiKey = "CW369ZE3QZ"
-//?key=4DH83PMR5B&categ=musique&diff=3
 
 export default {
   name: 'App',
@@ -21,25 +20,48 @@ export default {
     OptionsSelect,
     Question
   },
+  created() {
+    this.callApi();
+  },
   setup() {
     const state = reactive({
       logo: {
         url: "logo_large.png",
         width: 80
       },
-      question: {}
+      question: {},
+      apiCall: {
+        category: "animaux",
+        level: "1"
+      }
     });
 
-    function apiCall(category) {
-      fetch(apiUrl + '?key=' + apiKey + '&categ=' +  category + '&diff=1')
+    function setCategoryChosen(category) {
+      if (category) state.apiCall.category = category
+      callApi();
+    }
+
+    function setLevelChosen(level) {
+      if (level) state.apiCall.level = level
+      callApi();
+    }
+
+    function callApi() {
+      fetch(apiUrl + '?key=' + apiKey + '&categ=' +  state.apiCall.category + '&diff=' + state.apiCall.level)
         .then(blob => blob.json())
-        .then(response => state.question = response.results[0])
+        .then(response => {
+          if (response.response_code === 0) {
+            state.question = response.results[0]
+          }
+        })
         .catch(error => console.log(error))
     }
     
     return {
       state,
-      apiCall
+      setCategoryChosen,
+      setLevelChosen,
+      callApi
     }
   },
 
