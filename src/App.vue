@@ -1,5 +1,6 @@
 <template>
   <HeaderApp :logo-link="state.logo.url" :logo-width="state.logo.width"/>
+  <Timer />
   <OptionsSelect @category-chosen="setCategoryChosen" @level-chosen="setLevelChosen"/>
   <Question :question-details="state.question"/>
 </template>
@@ -9,6 +10,7 @@ import { reactive } from 'vue';
 import HeaderApp from './components/Header'
 import OptionsSelect from './components/OptionsSelect'
 import Question from './components/Question'
+import Timer from './components/Timer'
 
 const apiUrl = "https://www.openquizzdb.org/api.php"
 const apiKey = "CW369ZE3QZ"
@@ -18,7 +20,8 @@ export default {
   components: {
     HeaderApp,
     OptionsSelect,
-    Question
+    Question,
+    Timer
   },
   setup() {
     const state = reactive({
